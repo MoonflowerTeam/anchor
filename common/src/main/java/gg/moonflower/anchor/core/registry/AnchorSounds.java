@@ -18,12 +18,10 @@ public class AnchorSounds {
 
     public static final Supplier<SoundEvent> MUSIC_OVERWORLD = registerSound("music.overworld");
 
-    public static final Supplier<SoundEvent> MUSIC_NETHER_ACCUMULON = registerSound("music.nether.accumulon");
-    public static final Supplier<SoundEvent> MUSIC_NETHER_EULOGY = registerSound("music.nether.eulogy");
-    public static final Supplier<SoundEvent> MUSIC_NETHER_QUIETUS = registerSound("music.nether.quietus");
+    public static final Supplier<SoundEvent> MUSIC_NETHER_NETHER_WASTES = registerSound("music.nether.nether_wastes");
+    public static final Supplier<SoundEvent> MUSIC_NETHER_SOUL_SAND_VALLEY = registerSound("music.nether.soul_sand_valley");
 
-    public static final Supplier<SoundEvent> MUSIC_END_CODA = registerSound("music.end.coda");
-    public static final Supplier<SoundEvent> MUSIC_END_THE_VOYAGER = registerSound("music.end.the_voyager");
+    public static final Supplier<SoundEvent> MUSIC_END = registerSound("music.end");
 
     private static Supplier<SoundEvent> registerSound(String id) {
         return SOUNDS.register(id, () -> new SoundEvent(new ResourceLocation(Anchor.MOD_ID, id)));

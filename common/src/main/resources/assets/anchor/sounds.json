@@ -23,7 +23,7 @@
       }
     ]
   },
-  "music.nether.accumulon": {
+  "music.nether.nether_wastes": {
     "sounds": [
       {
         "name": "anchor:music/nether/accumulon",
@@ -33,36 +33,29 @@
       }
     ]
   },
-  "music.nether.eulogy": {
-    "sounds": [
-      {
-        "name": "anchor:music/nether/eulogy",
-        "volume": 0.4,
-        "stream": true
-      }
-    ]
-  },
-  "music.nether.quietus": {
+  "music.nether.soul_sand_valley": {
     "sounds": [
       {
         "name": "anchor:music/nether/quietus",
         "volume": 0.5,
         "stream": true,
         "weight": 5
+      },
+      {
+        "name": "anchor:music/nether/eulogy",
+        "volume": 0.4,
+        "stream": true,
+        "weight": 5
       }
     ]
   },
-  "music.end.coda": {
+  "music.end": {
     "sounds": [
       {
         "name": "anchor:music/end/coda",
         "volume": 0.4,
         "stream": true
-      }
-    ]
-  },
-  "music.end.the_voyager": {
-    "sounds": [
+      },
       {
         "name": "anchor:music/end/the_voyager",
         "volume": 0.4,
