@@ -1,0 +1,34 @@
+{
+  "music.game": {
+    "sounds": [
+      {
+        "name": "anchor:music.overworld",
+        "type": "event"
+      }
+    ]
+  },
+  "music.nether.nether_wastes": {
+    "sounds": [
+      {
+        "name": "anchor:music.nether.accumulon",
+        "type": "event"
+      }
+    ]
+  },
+  "music.nether.soul_sand_valley": {
+    "sounds": [
+      {
+        "name": "anchor:music.nether.quietus",
+        "type": "event"
+      }
+    ]
+  },
+  "music.end": {
+    "sounds": [
+      {
+        "name": "anchor:music.end.coda",
+        "type": "event"
+      }
+    ]
+  }
+}

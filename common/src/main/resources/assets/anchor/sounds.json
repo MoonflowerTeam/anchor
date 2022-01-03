@@ -1,0 +1,97 @@
+{
+  "music.overworld": {
+    "sounds": [
+      {
+        "name": "anchor:music/overworld/anais",
+        "volume": 0.4,
+        "stream": true
+      },
+      {
+        "name": "anchor:music/overworld/remote",
+        "volume": 0.4,
+        "stream": true
+      },
+      {
+        "name": "anchor:music/overworld/rodhim",
+        "volume": 0.4,
+        "stream": true
+      },
+      {
+        "name": "anchor:music/overworld/yellow_haze",
+        "volume": 0.4,
+        "stream": true
+      }
+    ]
+  },
+  "music.nether.accumulon": {
+    "sounds": [
+      {
+        "name": "anchor:music/nether/accumulon",
+        "volume": 0.4,
+        "stream": true,
+        "weight": 4
+      }
+    ]
+  },
+  "music.nether.eulogy": {
+    "sounds": [
+      {
+        "name": "anchor:music/nether/eulogy",
+        "volume": 0.4,
+        "stream": true
+      }
+    ]
+  },
+  "music.nether.quietus": {
+    "sounds": [
+      {
+        "name": "anchor:music/nether/quietus",
+        "volume": 0.5,
+        "stream": true,
+        "weight": 5
+      }
+    ]
+  },
+  "music.end.coda": {
+    "sounds": [
+      {
+        "name": "anchor:music/end/coda",
+        "volume": 0.4,
+        "stream": true
+      }
+    ]
+  },
+  "music.nether.the_voyager": {
+    "sounds": [
+      {
+        "name": "anchor:music/end/the_voyager",
+        "volume": 0.4,
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.fox": {
+    "sounds": [
+      {
+        "name": "anchor:records/fox",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.hullabaloo": {
+    "sounds": [
+      {
+        "name": "anchor:records/hullabaloo",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.epilogue": {
+    "sounds": [
+      {
+        "name": "anchor:records/epilogue",
+        "stream": true
+      }
+    ]
+  }
+}

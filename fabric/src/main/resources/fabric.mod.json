@@ -3,9 +3,9 @@
   "id": "${id}",
   "version": "${version}",
   "name": "${name}",
-  "description": "This is an example starter template.",
+  "description": "Anchor is a music mod pack made by Mista Jub to expand upon the current music within Minecraft sticking to the classic C418 style. Along with various ambience tracks, three new music discs are added as well to survival Minecraft.",
   "authors": [ "Moonflower" ],
-  "contributors": [ "An author", "Another author", "The last author" ],
+  "contributors": [ "Jackson", "Mista Jub" ],
   "contact": {
     "homepage": "https://moonflower.gg",
 	"issues": "https://github.com/MoonflowerTeam/${repo}/issues",
@@ -14,12 +14,11 @@
   "license": "GPLv3",
   "environment": "*",
   "mixins": [
-    "${id}-common.mixins.json",
-    "${id}.mixins.json"
+    "${id}-common.mixins.json"
   ],
   "entrypoints": {
     "main": [
-      "gg.moonflower.starter.core.fabric.StarterFabric"
+      "gg.moonflower.anchor.core.fabric.AnchorFabric"
     ]
   },
   "depends": {

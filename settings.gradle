@@ -8,7 +8,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "starter"
+rootProject.name = "anchor"
 
 include("common")
 include("fabric")
