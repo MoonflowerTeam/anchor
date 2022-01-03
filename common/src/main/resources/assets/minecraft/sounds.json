@@ -10,7 +10,7 @@
   "music.nether.nether_wastes": {
     "sounds": [
       {
-        "name": "anchor:music.nether.accumulon",
+        "name": "anchor:music.nether.nether_wastes",
         "type": "event"
       }
     ]
@@ -18,7 +18,7 @@
   "music.nether.soul_sand_valley": {
     "sounds": [
       {
-        "name": "anchor:music.nether.quietus",
+        "name": "anchor:music.nether.soul_sand_valley",
         "type": "event"
       }
     ]
@@ -26,7 +26,7 @@
   "music.end": {
     "sounds": [
       {
-        "name": "anchor:music.end.coda",
+        "name": "anchor:music.end",
         "type": "event"
       }
     ]

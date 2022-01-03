@@ -3,7 +3,6 @@ package gg.moonflower.anchor.core.registry.fabric;
 import gg.moonflower.anchor.common.item.AnchorRecordItem;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.RecordItem;
 
 import java.util.function.Supplier;
 
