@@ -12,12 +12,6 @@ architectury {
     fabric()
 }
 
-loom {
-    mixin {
-        defaultRefmapName = "${project.mod_id}-refmap.json"
-    }
-}
-
 configurations {
     common
     shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
