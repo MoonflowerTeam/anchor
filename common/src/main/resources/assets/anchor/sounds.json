@@ -3,22 +3,22 @@
     "sounds": [
       {
         "name": "anchor:music/overworld/anais",
-        "volume": 0.4,
+        "volume": 0.3,
         "stream": true
       },
       {
         "name": "anchor:music/overworld/remote",
-        "volume": 0.4,
+        "volume": 0.3,
         "stream": true
       },
       {
         "name": "anchor:music/overworld/rodhim",
-        "volume": 0.4,
+        "volume": 0.3,
         "stream": true
       },
       {
         "name": "anchor:music/overworld/yellow_haze",
-        "volume": 0.4,
+        "volume": 0.3,
         "stream": true
       }
     ]
@@ -61,7 +61,7 @@
       }
     ]
   },
-  "music.nether.the_voyager": {
+  "music.end.the_voyager": {
     "sounds": [
       {
         "name": "anchor:music/end/the_voyager",
