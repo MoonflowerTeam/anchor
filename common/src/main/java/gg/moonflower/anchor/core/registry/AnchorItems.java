@@ -21,6 +21,8 @@ public class AnchorItems {
     public static final Supplier<Item> MUSIC_DISC_FOX = ITEMS.register("music_disc_fox", createRecord(0, AnchorSounds.MUSIC_DISC_FOX, MUSIC_DISC));
     public static final Supplier<Item> MUSIC_DISC_HULLABALOO = ITEMS.register("music_disc_hullabaloo", createRecord(0, AnchorSounds.MUSIC_DISC_HULLABALOO, MUSIC_DISC));
     public static final Supplier<Item> MUSIC_DISC_EPILOGUE = ITEMS.register("music_disc_epilogue", createRecord(0, AnchorSounds.MUSIC_DISC_EPILOGUE, MUSIC_DISC));
+    public static final Supplier<Item> MUSIC_DISC_KILOBYTE = ITEMS.register("music_disc_kilobyte", createRecord(0, AnchorSounds.MUSIC_DISC_KILOBYTE, MUSIC_DISC));
+    public static final Supplier<Item> MUSIC_DISC_WARP = ITEMS.register("music_disc_warp", createRecord(0, AnchorSounds.MUSIC_DISC_WARP, MUSIC_DISC));
 
     @ExpectPlatform
     public static Supplier<Item> createRecord(int comparatorOutput, Supplier<SoundEvent> soundEventSupplier, Item.Properties properties) {
