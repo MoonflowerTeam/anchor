@@ -86,5 +86,21 @@
         "stream": true
       }
     ]
+  },
+  "music_disc.kilobyte": {
+    "sounds": [
+      {
+        "name": "anchor:records/kilobyte",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.warp": {
+    "sounds": [
+      {
+        "name": "anchor:records/warp",
+        "stream": true
+      }
+    ]
   }
 }
