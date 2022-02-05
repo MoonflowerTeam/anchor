@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "anchor:music_disc_fragment"
+    },
+    {
+      "tag": "anchor:sun_music_discs"
+    }
+  ],
+  "result": {
+    "item": "anchor:music_disc_sun"
+  }
+}

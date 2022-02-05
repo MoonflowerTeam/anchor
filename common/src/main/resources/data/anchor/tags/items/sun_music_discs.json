@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "anchor:music_disc_epilogue",
+    {
+      "id": "caverns_and_chasms:music_disc_epilogue",
+      "required": false
+    }
+  ]
+}

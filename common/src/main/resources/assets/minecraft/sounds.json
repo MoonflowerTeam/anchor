@@ -2,7 +2,15 @@
   "music.game": {
     "sounds": [
       {
-        "name": "anchor:music.overworld",
+        "name": "anchor:music.game",
+        "type": "event"
+      }
+    ]
+  },
+  "music.creative": {
+    "sounds": [
+      {
+        "name": "anchor:music.creative",
         "type": "event"
       }
     ]
