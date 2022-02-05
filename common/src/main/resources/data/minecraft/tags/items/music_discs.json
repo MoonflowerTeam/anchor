@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "anchor:music_disc_epilogue"
+    "anchor:music_disc_epilogue",
+    "anchor:music_disc_kilobyte",
+    "anchor:music_disc_warp",
+    "anchor:music_disc_capybara",
+    "anchor:music_disc_star",
+    "anchor:music_disc_fragment",
+    "anchor:music_disc_12",
+    "anchor:music_disc_sun",
+    "anchor:music_disc_fractal"
   ]
 }
