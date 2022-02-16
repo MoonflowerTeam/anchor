@@ -1,0 +1,39 @@
+{
+  "type": "pollen:loot",
+  "inject": "minecraft:chests/simple_dungeon",
+  "injectPools": [
+    {
+      "index": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "anchor:music_disc_kilobyte",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "pollen:item_exists",
+                "item": "endergetic:music_disc_kilobyte"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "anchor:music_disc_star",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "pollen:item_exists",
+                "item": "architects_palette:music_disc_star"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

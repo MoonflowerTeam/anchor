@@ -1,0 +1,25 @@
+{
+  "type": "pollen:loot",
+  "inject": "minecraft:chests/simple_dungeon",
+  "injectPools": [
+    {
+      "index": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "anchor:music_disc_epilogue",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "pollen:item_exists",
+                "item": "caverns_and_chasms:music_disc_epilogue"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
