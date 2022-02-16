@@ -1,0 +1,28 @@
+{
+  "type": "pollen:loot",
+  "inject": "minecraft:chests/stronghold_corridor",
+  "injectPools": [
+    {
+      "index": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "anchor:music_disc_epilogue",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "pollen:item_exists",
+                "item": "caverns_and_chasms:music_disc_epilogue"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "anchor:music_disc_fragment"
+        }
+      ]
+    }
+  ]
+}

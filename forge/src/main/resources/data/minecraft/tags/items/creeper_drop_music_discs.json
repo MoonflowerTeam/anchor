@@ -24,6 +24,18 @@
           }
         }
       ]
+    },
+    {
+      "id": "anchor:music_disc_capybara",
+      "conditions": [
+        {
+          "condition": "forge:not",
+          "value": {
+            "condition": "forge:item_exists",
+            "item": "nomansland:music_disc_capybara"
+          }
+        }
+      ]
     }
   ]
 }
