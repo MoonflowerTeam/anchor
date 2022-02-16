@@ -1,0 +1,50 @@
+{
+  "type": "pollen:loot",
+  "inject": "minecraft:entities/creeper",
+  "addPools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "anchor:music_disc_fragment"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "killer",
+          "predicate": {
+            "type": "#minecraft:skeletons"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "nbt": "{powered:1b}"
+          }
+        }
+      ]
+    }
+  ],
+  "injectPools": [
+    {
+      "index": 1,
+      "entries": [],
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "nbt": "{powered:1b}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
