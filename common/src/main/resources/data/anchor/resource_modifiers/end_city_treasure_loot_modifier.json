@@ -1,6 +1,6 @@
 {
   "type": "pollen:loot",
-  "inject": "minecraft:chests/simple_dungeon",
+  "inject": "minecraft:chests/end_city_treasure",
   "injectPools": [
     {
       "index": 0,
@@ -13,7 +13,7 @@
             {
               "condition": "minecraft:inverted",
               "term": {
-                "condition": "pollen:item_exists",
+                "condition": "anchor:item_exists",
                 "item": "endergetic:music_disc_kilobyte"
               }
             }
@@ -27,7 +27,7 @@
             {
               "condition": "minecraft:inverted",
               "term": {
-                "condition": "pollen:item_exists",
+                "condition": "anchor:item_exists",
                 "item": "architects_palette:music_disc_star"
               }
             }
