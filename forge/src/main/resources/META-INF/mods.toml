@@ -9,10 +9,9 @@ version = "${version}"
 displayName = "${name}"
 authors = "Moonflower"
 credits = "Mista Jub, Jackson"
-description = "Anchor is a music mod pack made by Mista Jub to expand upon the current music within Minecraft sticking to the classic C418 style. Along with various ambience tracks, three new music discs are added as well to survival Minecraft."
+description = "An expansion on Minecraft's classic music."
 displayURL = "https://mistajub.bandcamp.com/album/anchor"
-#updateJSONURL = ""
-#logoFile = ""
+logoFile = "logo.png"
 
 [[dependencies.${id}]]
 modId = "forge"

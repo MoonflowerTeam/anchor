@@ -3,7 +3,7 @@
   "id": "${id}",
   "version": "${version}",
   "name": "${name}",
-  "description": "Anchor is a music mod pack made by Mista Jub to expand upon the current music within Minecraft sticking to the classic C418 style. Along with various ambience tracks, three new music discs are added as well to survival Minecraft.",
+  "description": "An expansion on Minecraft's classic music.",
   "authors": [ "Moonflower" ],
   "contributors": [ "Mista Jub", "Jackson" ],
   "contact": {
