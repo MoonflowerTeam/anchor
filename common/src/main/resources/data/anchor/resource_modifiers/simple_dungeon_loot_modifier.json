@@ -13,7 +13,7 @@
             {
               "condition": "minecraft:inverted",
               "term": {
-                "condition": "pollen:item_exists",
+                "condition": "anchor:item_exists",
                 "item": "caverns_and_chasms:music_disc_epilogue"
               }
             }

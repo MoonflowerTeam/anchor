@@ -1,6 +1,6 @@
 {
   "type": "pollen:loot",
-  "inject": "minecraft:chests/stronghold_corridor",
+  "inject": "minecraft:chests/nether_bridge",
   "injectPools": [
     {
       "index": 0,
@@ -12,7 +12,7 @@
             {
               "condition": "minecraft:inverted",
               "term": {
-                "condition": "pollen:item_exists",
+                "condition": "anchor:item_exists",
                 "item": "caverns_and_chasms:music_disc_warp"
               }
             }
