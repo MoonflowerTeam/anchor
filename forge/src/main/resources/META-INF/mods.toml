@@ -13,6 +13,9 @@ description = "An expansion on Minecraft's classic music."
 displayURL = "https://mistajub.bandcamp.com/album/anchor"
 logoFile = "logo.png"
 
+[modpropreties.${id}]
+catalogueImageIcon="icon.png"
+
 [[dependencies.${id}]]
 modId = "forge"
 mandatory = true
