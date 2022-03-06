@@ -20,7 +20,7 @@
     ]
   },
   "depends": {
-    "minecraft": "1.16.5",
+    "minecraft": "1.16.x",
     "pollen": "1.x"
   }
 }
