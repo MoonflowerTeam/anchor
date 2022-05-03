@@ -5,7 +5,7 @@
   "name": "${name}",
   "description": "An expansion on Minecraft's classic music.",
   "authors": [ "Moonflower" ],
-  "contributors": [ "Mista Jub", "Jackson" ],
+  "contributors": [ "RENREN", "Jackson" ],
   "contact": {
     "homepage": "https://mistajub.bandcamp.com/album/anchor",
 	"issues": "https://github.com/MoonflowerTeam/${repo}/issues",
