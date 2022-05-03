@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public class AnchorLootConditions {
 
-    public static final PollinatedRegistry<LootItemConditionType> LOOT_CONDITIONS = PollinatedRegistry.createVanilla(Registry.LOOT_CONDITION_TYPE, Anchor.MOD_ID);
+    public static final PollinatedRegistry<LootItemConditionType> LOOT_CONDITIONS = PollinatedRegistry.create(Registry.LOOT_CONDITION_TYPE, Anchor.MOD_ID);
 
     public static final Supplier<LootItemConditionType> ITEM_EXISTS = LOOT_CONDITIONS.register("item_exists", () -> new LootItemConditionType(new ItemExistsLootCondition.Serializer()));
 }
