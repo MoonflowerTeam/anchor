@@ -31,7 +31,7 @@ public class ItemExistsLootCondition implements LootItemCondition {
     }
 
     public boolean test(LootContext arg) {
-        return Registry.ITEM.getOptional(this.item).isPresent();
+        return Registry.ITEM.containsKey(this.item);
     }
 
     public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ItemExistsLootCondition> {
