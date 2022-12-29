@@ -97,6 +97,33 @@
       }
     ]
   },
+  "music.overworld.sky": {
+    "sounds": [
+      {
+        "name": "anchor:music/overworld/hello",
+        "volume": 0.3,
+        "stream": true
+      }
+    ]
+  },
+  "music.overworld.deep": {
+    "sounds": [
+      {
+        "name": "anchor:music/overworld/brave",
+        "volume": 0.3,
+        "stream": true
+      }
+    ]
+  },
+  "music.nether.roof": {
+    "sounds": [
+      {
+        "name": "anchor:music/nether/nowhere",
+        "volume": 0.3,
+        "stream": true
+      }
+    ]
+  },
   "music_disc.fox": {
     "sounds": [
       {

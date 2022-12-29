@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "gg.moonflower.anchor.core.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "client.MinecraftMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

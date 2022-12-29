@@ -14,6 +14,9 @@
   "license": "GPLv3",
   "icon": "icon.png",
   "environment": "*",
+  "mixins": [
+    "${id}-common.mixins.json"
+  ],
   "entrypoints": {
     "main": [
       "gg.moonflower.anchor.core.fabric.AnchorFabric"
