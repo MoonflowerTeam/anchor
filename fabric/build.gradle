@@ -1,11 +1,11 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "me.shedaniel.unified-publishing"
 }
 
-archivesBaseName = "${rootProject.archivesBaseName}-${project.name}"
+sourceSets.main.resources {
+    srcDir file("src/generated/resources")
+}
 
 architectury {
     platformSetupLoomIde()
@@ -14,23 +14,16 @@ architectury {
 
 configurations {
     common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    shadowCommon
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
 }
 
-
-repositories {
-    maven { url "https://maven.terraformersmc.com/" }
-}
-
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-    modApi("gg.moonflower:pollen-fabric:${rootProject.pollen_version}") { transitive = false }
-
-    modRuntimeOnly "com.terraformersmc:modmenu:${rootProject.mod_menu_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    modImplementation("gg.moonflower:pollen-fabric:${rootProject.pollen_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
@@ -48,23 +41,19 @@ processResources {
                 "version": rootProject.mod_version,
                 "repo": rootProject.name
     }
-
-    doLast {
-        fileTree(dir: outputs.files.asPath, include: "**/*.json").each {
-            File file -> file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-        }
-    }
 }
 
 shadowJar {
-    exclude "archiectury.common.json"
+    exclude "architectury.common.json"
+    exclude "${rootProject.mod_id}-common.accesswidener"
 
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
 }
 
 remapJar {
-    input.set shadowJar.archiveFile
+    injectAccessWidener = true
+    inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
     classifier null
 }
@@ -74,9 +63,15 @@ jar {
 }
 
 sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
+    afterEvaluate {
+        [":common"].forEach {
+            def depSources = project(it).sourcesJar
+            dependsOn depSources
+            from(depSources.archiveFile.map { zipTree(it) }) {
+                exclude "${rootProject.mod_id}.accessWidener"
+            }
+        }
+    }
 }
 
 components.java {
@@ -90,6 +85,41 @@ publishing {
         mavenFabric(MavenPublication) {
             artifactId = project.archivesBaseName
             from components.java
+        }
+    }
+}
+
+unifiedPublishing {
+    project {
+        displayName = "[Fabric $rootProject.supported_version] $rootProject.mod_name $rootProject.mod_version"
+        gameVersions = ["$rootProject.minecraft_version"]
+        gameLoaders = ["fabric", "quilt"]
+        changelog = createChangelog()
+        mainPublication tasks.remapJar
+        relations {
+            depends {
+                curseforge = "pollen"
+                modrinth = "pollen"
+            }
+        }
+
+        var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
+        if (CURSE_API_KEY != null) {
+            curseforge {
+                token = CURSE_API_KEY
+                id = rootProject.curseforge_id
+                releaseType = "beta"
+            }
+        }
+
+        var MODRINTH_TOKEN = project.findProperty("MODRINTH_TOKEN") ?: System.getenv("MODRINTH_TOKEN")
+        if (MODRINTH_TOKEN != null) {
+            modrinth {
+                token = MODRINTH_TOKEN
+                id = rootProject.modrinth_id
+                version = "$rootProject.mod_version+$project.name-$rootProject.minecraft_version"
+                releaseType = "release"
+            }
         }
     }
 }

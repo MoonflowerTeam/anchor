@@ -1,11 +1,29 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "me.shedaniel.unified-publishing"
 }
 
 archivesBaseName = "${rootProject.archivesBaseName}-${project.name}"
+
+loom {
+    forge {
+        mixinConfigs "${project.mod_id}.mixins.json", "${project.mod_id}-common.mixins.json"
+
+        dataGen {
+            mod project.mod_id
+        }
+    }
+
+    runs {
+        data {
+            programArgs "--existing", file("src/main/resources").absolutePath
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir file("src/generated/resources")
+}
 
 architectury {
     platformSetupLoomIde()
@@ -14,20 +32,15 @@ architectury {
 
 configurations {
     common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    shadowCommon
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentForge.extendsFrom common
 }
 
-
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
-
-    modApi("gg.moonflower:pollen-forge:${rootProject.pollen_version}") { transitive = false }
-
-//	modRuntimeOnly "curse.maven:configured-457570:3533860"
-//  modRuntimeOnly "curse.maven:catalogue-459701:3529457"
+    forge "net.minecraftforge:forge:${rootProject.architectury.minecraft}-${rootProject.forge_version}"
+    modImplementation("gg.moonflower:pollen-forge:${rootProject.pollen_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
@@ -45,24 +58,19 @@ processResources {
                 "version": rootProject.mod_version,
                 "repo": rootProject.name
     }
-
-    doLast {
-        fileTree(dir: outputs.files.asPath, include: "**/*.json").each {
-            File file -> file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
-        }
-    }
 }
 
 shadowJar {
     exclude "fabric.mod.json"
-    exclude "archiectury.common.json"
+    exclude "architectury.common.json"
+    exclude "${rootProject.mod_id}-common.accesswidener"
 
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
 }
 
 remapJar {
-    input.set shadowJar.archiveFile
+    inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
     classifier null
 }
@@ -72,9 +80,15 @@ jar {
 }
 
 sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
+    afterEvaluate {
+        [":common"].forEach {
+            def depSources = project(it).sourcesJar
+            dependsOn depSources
+            from(depSources.archiveFile.map { zipTree(it) }) {
+                exclude "${rootProject.mod_id}.accessWidener"
+            }
+        }
+    }
 }
 
 components.java {
@@ -88,6 +102,41 @@ publishing {
         mavenForge(MavenPublication) {
             artifactId = project.archivesBaseName
             from components.java
+        }
+    }
+}
+
+unifiedPublishing {
+    project {
+        displayName = "[Forge $rootProject.supported_version] $rootProject.mod_name $rootProject.mod_version"
+        gameVersions = ["$rootProject.minecraft_version"]
+        gameLoaders = ["forge"]
+        changelog = createChangelog()
+        mainPublication tasks.remapJar
+        relations {
+            depends {
+                curseforge = "pollen"
+                modrinth = "pollen"
+            }
+        }
+
+        var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
+        if (CURSE_API_KEY != null) {
+            curseforge {
+                token = CURSE_API_KEY
+                id = rootProject.curseforge_id
+                releaseType = "beta"
+            }
+        }
+
+        var MODRINTH_TOKEN = project.findProperty("MODRINTH_TOKEN") ?: System.getenv("MODRINTH_TOKEN")
+        if (MODRINTH_TOKEN != null) {
+            modrinth {
+                token = MODRINTH_TOKEN
+                id = rootProject.modrinth_id
+                version = "$rootProject.mod_version+$project.name-$rootProject.minecraft_version"
+                releaseType = "release"
+            }
         }
     }
 }
