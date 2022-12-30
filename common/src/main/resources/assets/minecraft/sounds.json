@@ -1,4 +1,12 @@
 {
+  "music.menu": {
+    "sounds": [
+      {
+        "name": "anchor:music/overworld/donhacky",
+        "stream": true
+      }
+    ]
+  },
   "music.game": {
     "sounds": [
       {
