@@ -7,7 +7,7 @@ archivesBaseName = "${rootProject.archivesBaseName}-${project.name}"
 
 loom {
     forge {
-        mixinConfigs "${project.mod_id}.mixins.json", "${project.mod_id}-common.mixins.json"
+        mixinConfigs "${project.mod_id}-common.mixins.json"
 
         dataGen {
             mod project.mod_id
