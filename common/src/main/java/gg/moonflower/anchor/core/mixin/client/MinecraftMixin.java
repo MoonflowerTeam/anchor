@@ -18,19 +18,20 @@ public class MinecraftMixin {
 
     @Shadow @Nullable public LocalPlayer player;
 
-    @Inject(method = "getSituationalMusic", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBiome(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;"), cancellable = true)
+    @Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
     private void anchor$addMusic(CallbackInfoReturnable<Music> cir) {
-        //noinspection ConstantConditions
-        ClientLevel level = (ClientLevel) this.player.level;
-        double y = this.player.getY();
-        if (level.dimension() == Level.OVERWORLD) {
-            if (y >= level.effects().getCloudHeight()) {
-                cir.setReturnValue(AnchorSounds.OVERWORLD_SKY); // Above cloud height
-            } else if (y < 0) {
-                cir.setReturnValue(AnchorSounds.OVERWORLD_DEEP); // Under y 0
+        if (this.player != null && this.player.level != null) {
+            ClientLevel level = (ClientLevel) this.player.level;
+            double y = this.player.getY();
+            if (level.dimension() == Level.OVERWORLD) {
+                if (y >= level.effects().getCloudHeight()) {
+                    cir.setReturnValue(AnchorSounds.OVERWORLD_SKY); // Above cloud height
+                } else if (y < 0) {
+                    cir.setReturnValue(AnchorSounds.OVERWORLD_DEEP); // Under y 0
+                }
+            } else if (level.dimension() == Level.NETHER && y >= level.dimensionType().logicalHeight()) {
+                cir.setReturnValue(AnchorSounds.NETHER_ROOF); // Above the nether roof
             }
-        } else if (level.dimension() == Level.NETHER && y >= level.dimensionType().logicalHeight()) {
-            cir.setReturnValue(AnchorSounds.NETHER_ROOF); // Above the nether roof
         }
     }
 }
