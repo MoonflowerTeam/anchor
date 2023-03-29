@@ -1,28 +1,5 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "me.shedaniel.unified-publishing"
-}
-
-archivesBaseName = "${rootProject.archivesBaseName}-${project.name}"
-
-loom {
-    forge {
-        mixinConfigs "${project.mod_id}-common.mixins.json"
-
-        dataGen {
-            mod project.mod_id
-        }
-    }
-
-    runs {
-        data {
-            programArgs "--existing", file("src/main/resources").absolutePath
-        }
-    }
-}
-
-sourceSets.main.resources {
-    srcDir file("src/generated/resources")
 }
 
 architectury {
@@ -30,47 +7,61 @@ architectury {
     forge()
 }
 
+loom {
+    forge {
+        mixinConfig "${project.mod_id}-common.client.mixins.json"
+    }
+}
+
 configurations {
     common
-    shadowCommon
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentForge.extendsFrom common
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.architectury.minecraft}-${rootProject.forge_version}"
-    modImplementation("gg.moonflower:pollen-forge:${rootProject.pollen_version}")
+    forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_major_version}.${rootProject.forge_minor_version}.${rootProject.forge_build_version}"
+    modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
+    implementation(project(":common").sourceSets.client.output)
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }
 
 processResources {
-    inputs.property "id", rootProject.mod_id
-    inputs.property "name", rootProject.mod_name
-    inputs.property "version", rootProject.mod_version
-    inputs.property "repo", rootProject.name
+    inputs.property "mod_id", project.mod_id
+    inputs.property "mod_version", project.mod_version
+    inputs.property "mod_name", project.mod_name
+    inputs.property "mod_description", project.mod_description
+    inputs.property "archives_base_name", project.archives_base_name
+
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "forge_major_version", project.forge_major_version
 
     filesMatching(["META-INF/mods.toml", "pack.mcmeta"]) {
-        expand "id": rootProject.mod_id,
-                "name": rootProject.mod_name,
-                "version": rootProject.mod_version,
-                "repo": rootProject.name
+        expand "mod_id": project.mod_id,
+                "mod_version": project.mod_version,
+                "mod_name": project.mod_name,
+                "mod_description": project.mod_description,
+                "archives_base_name": project.archives_base_name,
+                "minecraft_version": project.minecraft_version,
+                "forge_major_version": project.forge_major_version
+
     }
 }
 
 shadowJar {
     exclude "fabric.mod.json"
     exclude "architectury.common.json"
-    exclude "${rootProject.mod_id}-common.accesswidener"
 
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
 }
 
 remapJar {
-    inputFile.set shadowJar.archiveFile
+    input.set shadowJar.archiveFile
     dependsOn shadowJar
     classifier null
 }
@@ -79,64 +70,8 @@ jar {
     classifier "dev"
 }
 
-sourcesJar {
-    afterEvaluate {
-        [":common"].forEach {
-            def depSources = project(it).sourcesJar
-            dependsOn depSources
-            from(depSources.archiveFile.map { zipTree(it) }) {
-                exclude "${rootProject.mod_id}.accessWidener"
-            }
-        }
-    }
-}
-
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
-    }
-}
-
-publishing {
-    publications {
-        mavenForge(MavenPublication) {
-            artifactId = project.archivesBaseName
-            from components.java
-        }
-    }
-}
-
-unifiedPublishing {
-    project {
-        displayName = "[Forge $rootProject.supported_version] $rootProject.mod_name $rootProject.mod_version"
-        gameVersions = ["$rootProject.minecraft_version"]
-        gameLoaders = ["forge"]
-        changelog = createChangelog()
-        mainPublication tasks.remapJar
-        relations {
-            depends {
-                curseforge = "pollen"
-                modrinth = "pollen"
-            }
-        }
-
-        var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
-        if (CURSE_API_KEY != null) {
-            curseforge {
-                token = CURSE_API_KEY
-                id = rootProject.curseforge_id
-                releaseType = "beta"
-            }
-        }
-
-        var MODRINTH_TOKEN = project.findProperty("MODRINTH_TOKEN") ?: System.getenv("MODRINTH_TOKEN")
-        if (MODRINTH_TOKEN != null) {
-            modrinth {
-                token = MODRINTH_TOKEN
-                id = rootProject.modrinth_id
-                version = "$rootProject.mod_version+$project.name-$rootProject.minecraft_version"
-                releaseType = "release"
-            }
-        }
     }
 }

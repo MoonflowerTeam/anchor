@@ -1,10 +1,5 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "me.shedaniel.unified-publishing"
-}
-
-sourceSets.main.resources {
-    srcDir file("src/generated/resources")
 }
 
 architectury {
@@ -12,9 +7,13 @@ architectury {
     fabric()
 }
 
+loom {
+    splitEnvironmentSourceSets()
+}
+
 configurations {
     common
-    shadowCommon
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
@@ -22,30 +21,35 @@ configurations {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-    modImplementation("gg.moonflower:pollen-fabric:${rootProject.pollen_version}")
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
 
+    clientImplementation(project(":common").sourceSets.client.output)
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
 
 processResources {
-    inputs.property "id", rootProject.mod_id
-    inputs.property "name", rootProject.mod_name
-    inputs.property "version", rootProject.mod_version
-    inputs.property "repo", rootProject.name
+    inputs.property "mod_id", project.mod_id
+    inputs.property "mod_version", project.mod_version
+    inputs.property "mod_name", project.mod_name
+    inputs.property "mod_description", project.mod_description
+    inputs.property "archives_base_name", project.archives_base_name
 
-    filesMatching("fabric.mod.json") {
-        expand "id": rootProject.mod_id,
-                "name": rootProject.mod_name,
-                "version": rootProject.mod_version,
-                "repo": rootProject.name
+    inputs.property "minecraft_version", project.minecraft_version
+
+    filesMatching(["fabric.mod.json"]) {
+        expand "mod_id": project.mod_id,
+                "mod_version": project.mod_version,
+                "mod_name": project.mod_name,
+                "mod_description": project.mod_description,
+                "minecraft_version": project.minecraft_version,
+                "archives_base_name": project.archives_base_name
     }
 }
 
 shadowJar {
     exclude "architectury.common.json"
-    exclude "${rootProject.mod_id}-common.accesswidener"
 
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
@@ -53,7 +57,7 @@ shadowJar {
 
 remapJar {
     injectAccessWidener = true
-    inputFile.set shadowJar.archiveFile
+    input.set shadowJar.archiveFile
     dependsOn shadowJar
     classifier null
 }
@@ -62,64 +66,8 @@ jar {
     classifier "dev"
 }
 
-sourcesJar {
-    afterEvaluate {
-        [":common"].forEach {
-            def depSources = project(it).sourcesJar
-            dependsOn depSources
-            from(depSources.archiveFile.map { zipTree(it) }) {
-                exclude "${rootProject.mod_id}.accessWidener"
-            }
-        }
-    }
-}
-
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
-    }
-}
-
-publishing {
-    publications {
-        mavenFabric(MavenPublication) {
-            artifactId = project.archivesBaseName
-            from components.java
-        }
-    }
-}
-
-unifiedPublishing {
-    project {
-        displayName = "[Fabric $rootProject.supported_version] $rootProject.mod_name $rootProject.mod_version"
-        gameVersions = ["$rootProject.minecraft_version"]
-        gameLoaders = ["fabric", "quilt"]
-        changelog = createChangelog()
-        mainPublication tasks.remapJar
-        relations {
-            depends {
-                curseforge = "pollen"
-                modrinth = "pollen"
-            }
-        }
-
-        var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
-        if (CURSE_API_KEY != null) {
-            curseforge {
-                token = CURSE_API_KEY
-                id = rootProject.curseforge_id
-                releaseType = "beta"
-            }
-        }
-
-        var MODRINTH_TOKEN = project.findProperty("MODRINTH_TOKEN") ?: System.getenv("MODRINTH_TOKEN")
-        if (MODRINTH_TOKEN != null) {
-            modrinth {
-                token = MODRINTH_TOKEN
-                id = rootProject.modrinth_id
-                version = "$rootProject.mod_version+$project.name-$rootProject.minecraft_version"
-                releaseType = "release"
-            }
-        }
     }
 }

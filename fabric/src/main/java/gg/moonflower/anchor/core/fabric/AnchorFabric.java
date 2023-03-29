@@ -6,6 +6,6 @@ import net.fabricmc.api.ModInitializer;
 public class AnchorFabric implements ModInitializer {
     @Override
     public void onInitialize() {
-        Anchor.PLATFORM.setup();
+        Anchor.onCommonInit();
     }
 }

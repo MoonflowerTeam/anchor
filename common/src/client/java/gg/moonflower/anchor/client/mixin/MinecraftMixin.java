@@ -1,4 +1,4 @@
-package gg.moonflower.anchor.core.mixin.client;
+package gg.moonflower.anchor.client.mixin;
 
 import gg.moonflower.anchor.core.registry.AnchorSounds;
 import net.minecraft.client.Minecraft;

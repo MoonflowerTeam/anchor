@@ -1,41 +1,8 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "anchor:music_disc_fox",
-      "conditions": [
-        {
-          "type": "forge:not",
-          "value": {
-            "type": "forge:item_exists",
-            "item": "berry_good:music_disc_fox"
-          }
-        }
-      ]
-    },
-    {
-      "id": "anchor:music_disc_hullabaloo",
-      "conditions": [
-        {
-          "type": "forge:not",
-          "value": {
-            "type": "forge:item_exists",
-            "item": "neapolitan:music_disc_hullabaloo"
-          }
-        }
-      ]
-    },
-    {
-      "id": "anchor:music_disc_capybara",
-      "conditions": [
-        {
-          "type": "forge:not",
-          "value": {
-            "type": "forge:item_exists",
-            "item": "nomansland:music_disc_capybara"
-          }
-        }
-      ]
-    }
+    "anchor:music_disc_fox",
+    "anchor:music_disc_hullabaloo",
+    "anchor:music_disc_capybara"
   ]
 }

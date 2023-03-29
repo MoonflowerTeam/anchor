@@ -5,12 +5,9 @@ buildscript {
 }
 
 plugins {
-    id "dev.architectury.loom" version "1.0-SNAPSHOT" apply false
-    id "io.github.juuxel.loom-quiltflower" version "1.8.0" apply false
     id "architectury-plugin" version "3.4-SNAPSHOT"
-
-    id "me.shedaniel.unified-publishing" version "0.1.+" apply false
-    id "maven-publish"
+    id "dev.architectury.loom" version "1.0-SNAPSHOT" apply false
+    id "io.github.juuxel.loom-quiltflower" version "1.7.1" apply false
 }
 
 architectury {
@@ -21,71 +18,27 @@ subprojects {
     apply plugin: "dev.architectury.loom"
     apply plugin: "io.github.juuxel.loom-quiltflower"
 
-    archivesBaseName = "${rootProject.name}-${project.name}"
-
     loom {
         silentMojangMappingsLicense()
     }
 
     dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.architectury.minecraft}"
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_version}")
-        }
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        mappings loom.officialMojangMappings()
     }
 }
 
 allprojects {
     apply plugin: "java"
-    apply plugin: "maven-publish"
     apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
 
-    version = "${rootProject.mod_version}+${rootProject.minecraft_version}"
+    archivesBaseName = rootProject.archives_base_name
+    version = rootProject.mod_version
     group = rootProject.maven_group
-
-    repositories {
-        maven { url "https://repo.moonflower.gg/releases" }
-        maven { url "https://jitpack.io" }
-        maven { url "https://maven.parchmentmc.org" }
-        maven { url "https://maven.terraformersmc.com/" }
-        maven {
-            url "https://cursemaven.com"
-            content {
-                includeGroup "curse.maven"
-            }
-        }
-    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
         options.release.set(17)
-    }
-
-    ext {
-        createChangelog = {
-            def changes = new StringBuilder()
-            changes << "$rootProject.mod_name $rootProject.mod_version for $project.supported_version\n"
-            def proc = "git log --max-count=200 --pretty=format:%s".execute()
-            proc.in.eachLine { line ->
-                def processedLine = line.toString()
-                if (!processedLine.toLowerCase().contains("translations") &&
-                        !processedLine.toLowerCase().contains("merge") &&
-                        !processedLine.toLowerCase().contains("branch")
-                ) {
-                    changes << "\n- ${processedLine.capitalize()}"
-                }
-            }
-            proc.waitFor()
-            return changes.toString()
-        }
-    }
-
-    javadoc {
-        failOnError = false
-    }
-
-    java {
-        withSourcesJar()
     }
 }
