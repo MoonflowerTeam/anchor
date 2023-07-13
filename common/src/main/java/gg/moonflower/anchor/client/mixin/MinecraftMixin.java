@@ -16,7 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
 
-    @Shadow @Nullable public LocalPlayer player;
+    @Shadow
+    @Nullable
+    public LocalPlayer player;
 
     @Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
     private void anchor$addMusic(CallbackInfoReturnable<Music> cir) {
